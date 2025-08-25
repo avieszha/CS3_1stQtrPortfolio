@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Q1 2nd Graded Exercise</title>
+</head>
+<body>
+  <h1>Meal Total Calculator</h1>
+  <h2>Q1 2nd Graded Exercise submitted by Avisha Marie Fatima P. Reyes of 9-Rubidium</h2>
+
+  <p>Enter values, then click Accept Input.</p>
+
+  <p>
+    Meal Price: <input id="mp" type="text" placeholder="e.g., 119.99">
+    Tip: <input id="tip" type="text" placeholder="e.g., 20">
+    Service Charge (%) : <input id="sc" type="text" placeholder="e.g., 12">
+    <button onclick="totalMeal()">Accept Input</button>
+  </p>
+
+  <p id="result">Total Meal: </p>
+
+  <script>
+    // totalCost = mp + tip + (%sc/100 * mp)
+    function totalMeal() {
+      const mp  = parseFloat(document.getElementById('mp').value);
+      const tip = parseFloat(document.getElementById('tip').value);
+      const sc  = parseFloat(document.getElementById('sc').value);
+
+      if (isNaN(mp) || isNaN(tip) || isNaN(sc)) {
+        alert("Please enter numbers in all three boxes.");
+        return;
+      }
+
+      const totalCost = mp + tip + (sc/100 * mp);
+      const formatted = totalCost.toFixed(2);           
+
+      document.getElementById('result').innerHTML = "Total Meal: " + formatted;
+      console.log("mp:", mp, "tip:", tip, "sc%:", sc, "total:", totalCost);
+    }
+  </script>
+
+  <footer>
+    <p>
+      References:<br>
+      MDN Web Docs. (n.d.). <i>Number.prototype.toFixed()</i>. https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number/toFixed<br>
+      W3Schools. (n.d.). <i>JavaScript Number Methods</i>. https://www.w3schools.com/js/js_number_methods.asp
+    </p>
+  </footer>
+</body>
+</html>
