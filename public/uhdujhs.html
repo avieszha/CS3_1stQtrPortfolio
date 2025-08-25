@@ -1,0 +1,12 @@
+<script>
+    let age = Number(window.prompt("Enter your current age: "));
+    let maxAge = Number(window.prompt("Enter your maximum age: ", "90"));
+    let numPerDay = Number(window.prompt("Enter the number of takis you consume per day: ", "2"));
+    let totalRequired = (numPerDay * 365) * (maxAge - age);
+    let sure = window.confirm(`Are you sure you're ${age} years old and will live until ${maxAge}?`);
+    if (sure) {
+        console.log("You will need " + totalRequired + " takis to last you until " + maxAge);
+    } else {
+        console.log("rerun");
+    }
+</script>
