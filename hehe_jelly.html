@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>uwusirroygivemebonuspls</title>
+<style>
+  :root{
+    /* tweak these if you want a darker/lighter sea */
+    --bg-url: url("https://www.shutterstock.com/image-photo/scary-ghost-face-halloween-theme-600nw-1823019743.jpg");
+    --sea-tint: rgba(0, 20, 40, 0.55);
+  }
+
+  /* page */
+  html,body{height:100%; margin:0}
+  body{
+    background:
+      linear-gradient(var(--sea-tint), var(--sea-tint)),
+      var(--bg-url) center/cover no-repeat fixed;
+    overflow:hidden;
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+  }
+
+  /* a gentle vignette */
+  .vignette{
+    position:fixed; inset:0; pointer-events:none;
+    box-shadow: inset 0 0 200px 80px rgba(0,0,0,.55);
+  }
+
+  /* scene container */
+  .ocean{position:relative; width:100%; height:100%}
+
+  /* bubble layer (parallax) */
+  .bubble{
+    position:absolute; bottom:-10vmin; width:1vmin; height:1vmin;
+    border-radius:50%; background:rgba(255,255,255,.35);
+    filter:blur(.5px);
+    animation: rise var(--rise, 18s) linear infinite;
+    left: var(--x, 50%);
+  }
+  @keyframes rise{
+    0%   { transform: translateY(0) scale(var(--s,1)); opacity:.0 }
+    5%   { opacity:.4 }
+    90%  { opacity:.4 }
+    100% { transform: translateY(-120vh) scale(calc(var(--s,1) * .9)); opacity:0 }
+  }
+
+  /* ── jellyfish ───────────────────────────────────────── */
+
+  /* wrapper = horizontal swim path (so we can also float vertically inside) */
+  .j-wrapper{
+    position:absolute;
+    top: var(--top, 70%);
+    left: var(--left, 10%);
+    width: max(6vmin, 60px);
+    height: max(6vmin, 60px);
+    animation:
+      swim var(--swim, 18s) var(--swim-ease, ease-in-out) var(--swim-dir, normal) infinite,
+      drift var(--drift, 6s) ease-in-out infinite;
+    animation-delay: var(--delay, 0s);
+  }
+
+  /* curvy-ish path */
+  @keyframes swim{
+    0%   { transform: translateX(0) translateY(0) }
+    25%  { transform: translateX(18vmin) translateY(-6vmin) }
+    50%  { transform: translateX(36vmin) translateY(0) }
+    75%  { transform: translateX(18vmin) translateY(6vmin) }
+    100% { transform: translateX(0) translateY(0) }
+  }
+
+  /* subtle lateral sway (parallax-y) */
+  @keyframes drift{
+    0%,100%{ transform: translateX(0) }
+    50%    { transform: translateX(2vmin) }
+  }
+
+  /* body = actual jelly (floats up/down, glows, colorized with CSS vars) */
+  .jelly{
+    --hue: 180;              /* 0–360 */
+    --sat: 100%;
+    --light: 60%;
+    --glow: hsla(var(--hue) 100% 60% / .9);
+
+    position:absolute; inset:0; margin:auto;
+    width: var(--w, 70px); height: var(--h, 86px);
+    filter: drop-shadow(0 0 16px var(--glow)) drop-shadow(0 0 42px color-mix(in oklab, var(--glow), transparent 40%));
+    animation:
+      float var(--float, 4.5s) ease-in-out infinite,
+      glowPulse 3.2s ease-in-out infinite;
+  }
+
+  /* bell */
+  .jelly .bell{
+    position:absolute; inset:0;
+    border-radius: 60% 60% 65% 65%/ 55% 55% 45% 45%;
+    background:
+      radial-gradient(ellipse at 50% 20%, hsla(var(--hue) var(--sat) 95% / .55) 0 30%, transparent 55%),
+      radial-gradient(circle at 50% 35%, hsla(var(--hue) var(--sat) var(--light) / .7), hsla(var(--hue) 80% 40% / .6) 60%, transparent 70%);
+    box-shadow:
+      0 0 24px 6px hsla(var(--hue) 100% 60% / .35) inset,
+      0 12px 40px -10px hsla(var(--hue) 100% 60% / .45);
+  }
+
+  /* tentacles (generated with gradients) */
+  .jelly .legs{
+    position:absolute; left:50%; bottom:-22%;
+    width: 70%; height: 55%;
+    transform: translateX(-50%);
+    background:
+      repeating-linear-gradient(90deg,
+        hsla(var(--hue) 100% 75% / .85) 0 4px,
+        hsla(var(--hue) 100% 75% / .0) 4px 12px);
+    filter: blur(.2px) drop-shadow(0 0 6px hsla(var(--hue) 100% 70% / .7));
+    clip-path: inset(0 0 0 0 round 20px);
+    animation: wave var(--wave, 2.2s) ease-in-out infinite;
+    mask: radial-gradient(120% 100% at 50% 0%, #000 60%, transparent 100%); /* fade near bell */
+  }
+
+  /* float bob */
+  @keyframes float{
+    0%,100% { transform: translateY(0) }
+    50%     { transform: translateY(-28%) }
+  }
+
+  /* legs sway */
+  @keyframes wave{
+    0%   { transform: translateX(-50%) skewX(0deg) }
+    50%  { transform: translateX(-48%) skewX(6deg) }
+    100% { transform: translateX(-50%) skewX(0deg) }
+  }
+
+  /* glow pulse */
+  @keyframes glowPulse{
+    0%,100%{ filter: drop-shadow(0 0 16px var(--glow)) drop-shadow(0 0 42px color-mix(in oklab, var(--glow), transparent 40%)) }
+    50%    { filter: drop-shadow(0 0 32px var(--glow)) drop-shadow(0 0 64px color-mix(in oklab, var(--glow), white 20%)) }
+  }
+
+  /* accessibility */
+  @media (prefers-reduced-motion: reduce){
+    .j-wrapper, .jelly, .bubble{ animation: none }
+  }
+</style>
+</head>
+<body>
+  <div class="ocean" aria-hidden="true">
+
+    <!-- bubbles (random-ish params) -->
+    <div class="bubble" style="--x:8%;  --rise:22s; --s:1.2"></div>
+    <div class="bubble" style="--x:18%; --rise:18s; --s:.9"></div>
+    <div class="bubble" style="--x:28%; --rise:26s; --s:1.4"></div>
+    <div class="bubble" style="--x:38%; --rise:17s; --s:1.0"></div>
+    <div class="bubble" style="--x:62%; --rise:23s; --s:1.1"></div>
+    <div class="bubble" style="--x:71%; --rise:19s; --s:1.3"></div>
+    <div class="bubble" style="--x:84%; --rise:27s; --s:.8"></div>
+
+    <!-- JELLYFISH SQUAD -->
+    <!-- hue, size, position, delays, speeds, and direction are all customized per jelly -->
+    <div class="j-wrapper" style="--top:72%; --left:8%;  --swim:22s; --drift:7s;  --delay:-1s; --swim-dir: alternate;">
+      <div class="jelly" style="--hue: 180; --w:90px; --h:110px; --float:5.5s; --wave:2.2s;">
+        <div class="bell"></div>
+        <div class="legs"></div>
+      </div>
+    </div>
+
+    <div class="j-wrapper" style="--top:58%; --left:22%; --swim:18s; --drift:6s;  --delay:-3s;">
+      <div class="jelly" style="--hue: 300; --w:70px; --h:86px; --float:4.6s; --wave:2.0s;">
+        <div class="bell"></div><div class="legs"></div>
+      </div>
+    </div>
+
+    <div class="j-wrapper" style="--top:68%; --left:42%; --swim:26s; --drift:7.5s; --delay:-2s; --swim-dir: reverse;">
+      <div class="jelly" style="--hue: 150; --w:80px; --h:100px; --float:6.2s; --wave:2.4s;">
+        <div class="bell"></div><div class="legs"></div>
+      </div>
+    </div>
+
+    <div class="j-wrapper" style="--top:52%; --left:68%; --swim:20s; --drift:5.6s; --delay:-4s; --swim-dir: alternate-reverse;">
+      <div class="jelly" style="--hue: 35;  --w:64px; --h:78px; --float:4.2s; --wave:1.9s;">
+        <div class="bell"></div><div class="legs"></div>
+      </div>
+    </div>
+
+    <div class="j-wrapper" style="--top:78%; --left:78%; --swim:17s; --drift:6.4s; --delay:-1.6s;">
+      <div class="jelly" style="--hue: 330; --w:72px; --h:88px; --float:5.0s; --wave:2.1s;">
+        <div class="bell"></div><div class="legs"></div>
+      </div>
+    </div>
+
+    <div class="j-wrapper" style="--top:62%; --left:12%; --swim:24s; --drift:7.2s; --delay:-2.8s;">
+      <div class="jelly" style="--hue: 260; --w:60px; --h:74px; --float:4.0s; --wave:1.8s;">
+        <div class="bell"></div><div class="legs"></div>
+      </div>
+    </div>
+
+    <div class="j-wrapper" style="--top:84%; --left:34%; --swim:28s; --drift:8s;   --delay:-5s; --swim-dir: reverse;">
+      <div class="jelly" style="--hue: 95;  --w:96px; --h:120px; --float:6.8s; --wave:2.6s;">
+        <div class="bell"></div><div class="legs"></div>
+      </div>
+    </div>
+
+    <div class="j-wrapper" style="--top:46%; --left:56%; --swim:21s; --drift:6.8s; --delay:-3.6s;">
+      <div class="jelly" style="--hue: 205; --w:66px; --h:82px; --float:4.8s; --wave:2.0s;">
+        <div class="bell"></div><div class="legs"></div>
+      </div>
+    </div>
+
+    <div class="j-wrapper" style="--top:74%; --left:88%; --swim:19s; --drift:6s;  --delay:-2.2s; --swim-dir: alternate;">
+      <div class="jelly" style="--hue: 55;  --w:84px; --h:102px; --float:5.9s; --wave:2.3s;">
+        <div class="bell"></div><div class="legs"></div>
+      </div>
+    </div>
+
+    <div class="j-wrapper" style="--top:60%; --left:5%;  --swim:25s; --drift:7.4s; --delay:-1.2s;">
+      <div class="jelly" style="--hue: 0;   --w:62px; --h:76px; --float:4.4s; --wave:1.9s;">
+        <div class="bell"></div><div class="legs"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="vignette"></div>
+</body>
+</html>
