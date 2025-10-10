@@ -5,13 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>uwusirroygivemebonuspls</title>
 <style>
+
+  /* hehe boom gulat po kayo*/
   :root{
-    /* tweak these if you want a darker/lighter sea */
     --bg-url: url("https://www.shutterstock.com/image-photo/scary-ghost-face-halloween-theme-600nw-1823019743.jpg");
     --sea-tint: rgba(0, 20, 40, 0.55);
   }
 
-  /* page */
+  
   html,body{height:100%; margin:0}
   body{
     background:
@@ -21,16 +22,13 @@
     font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
   }
 
-  /* a gentle vignette */
   .vignette{
     position:fixed; inset:0; pointer-events:none;
     box-shadow: inset 0 0 200px 80px rgba(0,0,0,.55);
   }
 
-  /* scene container */
   .ocean{position:relative; width:100%; height:100%}
 
-  /* bubble layer (parallax) */
   .bubble{
     position:absolute; bottom:-10vmin; width:1vmin; height:1vmin;
     border-radius:50%; background:rgba(255,255,255,.35);
@@ -44,10 +42,6 @@
     90%  { opacity:.4 }
     100% { transform: translateY(-120vh) scale(calc(var(--s,1) * .9)); opacity:0 }
   }
-
-  /* ── jellyfish ───────────────────────────────────────── */
-
-  /* wrapper = horizontal swim path (so we can also float vertically inside) */
   .j-wrapper{
     position:absolute;
     top: var(--top, 70%);
@@ -60,7 +54,6 @@
     animation-delay: var(--delay, 0s);
   }
 
-  /* curvy-ish path */
   @keyframes swim{
     0%   { transform: translateX(0) translateY(0) }
     25%  { transform: translateX(18vmin) translateY(-6vmin) }
@@ -69,15 +62,13 @@
     100% { transform: translateX(0) translateY(0) }
   }
 
-  /* subtle lateral sway (parallax-y) */
   @keyframes drift{
     0%,100%{ transform: translateX(0) }
     50%    { transform: translateX(2vmin) }
   }
 
-  /* body = actual jelly (floats up/down, glows, colorized with CSS vars) */
   .jelly{
-    --hue: 180;              /* 0–360 */
+    --hue: 180;       
     --sat: 100%;
     --light: 60%;
     --glow: hsla(var(--hue) 100% 60% / .9);
@@ -90,7 +81,6 @@
       glowPulse 3.2s ease-in-out infinite;
   }
 
-  /* bell */
   .jelly .bell{
     position:absolute; inset:0;
     border-radius: 60% 60% 65% 65%/ 55% 55% 45% 45%;
@@ -102,7 +92,6 @@
       0 12px 40px -10px hsla(var(--hue) 100% 60% / .45);
   }
 
-  /* tentacles (generated with gradients) */
   .jelly .legs{
     position:absolute; left:50%; bottom:-22%;
     width: 70%; height: 55%;
@@ -114,29 +103,25 @@
     filter: blur(.2px) drop-shadow(0 0 6px hsla(var(--hue) 100% 70% / .7));
     clip-path: inset(0 0 0 0 round 20px);
     animation: wave var(--wave, 2.2s) ease-in-out infinite;
-    mask: radial-gradient(120% 100% at 50% 0%, #000 60%, transparent 100%); /* fade near bell */
+    mask: radial-gradient(120% 100% at 50% 0%, #000 60%, transparent 100%); 
   }
 
-  /* float bob */
   @keyframes float{
     0%,100% { transform: translateY(0) }
     50%     { transform: translateY(-28%) }
   }
 
-  /* legs sway */
   @keyframes wave{
     0%   { transform: translateX(-50%) skewX(0deg) }
     50%  { transform: translateX(-48%) skewX(6deg) }
     100% { transform: translateX(-50%) skewX(0deg) }
   }
 
-  /* glow pulse */
   @keyframes glowPulse{
     0%,100%{ filter: drop-shadow(0 0 16px var(--glow)) drop-shadow(0 0 42px color-mix(in oklab, var(--glow), transparent 40%)) }
     50%    { filter: drop-shadow(0 0 32px var(--glow)) drop-shadow(0 0 64px color-mix(in oklab, var(--glow), white 20%)) }
   }
 
-  /* accessibility */
   @media (prefers-reduced-motion: reduce){
     .j-wrapper, .jelly, .bubble{ animation: none }
   }
@@ -145,7 +130,6 @@
 <body>
   <div class="ocean" aria-hidden="true">
 
-    <!-- bubbles (random-ish params) -->
     <div class="bubble" style="--x:8%;  --rise:22s; --s:1.2"></div>
     <div class="bubble" style="--x:18%; --rise:18s; --s:.9"></div>
     <div class="bubble" style="--x:28%; --rise:26s; --s:1.4"></div>
@@ -154,8 +138,6 @@
     <div class="bubble" style="--x:71%; --rise:19s; --s:1.3"></div>
     <div class="bubble" style="--x:84%; --rise:27s; --s:.8"></div>
 
-    <!-- JELLYFISH SQUAD -->
-    <!-- hue, size, position, delays, speeds, and direction are all customized per jelly -->
     <div class="j-wrapper" style="--top:72%; --left:8%;  --swim:22s; --drift:7s;  --delay:-1s; --swim-dir: alternate;">
       <div class="jelly" style="--hue: 180; --w:90px; --h:110px; --float:5.5s; --wave:2.2s;">
         <div class="bell"></div>
